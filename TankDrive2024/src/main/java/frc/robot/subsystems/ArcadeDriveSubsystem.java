@@ -4,13 +4,24 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+public class ArcadeDriveSubsystem extends SubsystemBase {
+  
+  public ArcadeDriveSubsystem() {}
 
+  private final CANSparkMax CAN1 = new CANSparkMax(1, MotorType.kBrushless);
+  private final CANSparkMax CAN2 = new CANSparkMax(2, MotorType.kBrushless); 
+  private final CANSparkMax CAN3 = new CANSparkMax(3, MotorType.kBrushless); 
+  private final CANSparkMax CAN4 = new CANSparkMax(4, MotorType.kBrushless); 
+  
+  
+  
+  
   /**
    * Example command factory method.
    *
