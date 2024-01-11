@@ -12,12 +12,20 @@ public class ArcadeDriveCommand extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArcadeDriveSubsystem m_subsystem;
 
+
+  private final double angle;
+
+  private final double speed;
+
+
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ArcadeDriveCommand(ArcadeDriveSubsystem subsystem) {
+  public ArcadeDriveCommand(ArcadeDriveSubsystem subsystem, double angle, double speed) {
+    this.angle = angle;
+    this.speed = speed;
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -32,7 +40,7 @@ public class ArcadeDriveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    m_subsystem. ArcadeDrive(speed, angle);
   }
 
   // Called once the command ends or is interrupted.
