@@ -4,59 +4,47 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
-
-import java.util.function.Supplier;
-
-import com.revrobotics.RelativeEncoder;
-
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class ArcadeDriveCommand extends Command {
+public class AutonDriveCommand extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArcadeDriveSubsystem m_subsystem;
-
-  private final Supplier<Double> speedFunction, angleFunction;
+  private final double setPoint;
+  private final PIDController pidController = new PIDController(0.1, 0, 0);
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ArcadeDriveCommand(ArcadeDriveSubsystem subsystem, Supplier<Double> angle, Supplier<Double> speed) {
-    angleFunction = angle;
-    speedFunction = speed;
+  public AutonDriveCommand(ArcadeDriveSubsystem subsystem, double setPoint) {
     m_subsystem = subsystem;
+    this.setPoint = setPoint;
+
+    m_subsystem.resetEncoders();
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angle = angleFunction.get();
-    double speed = speedFunction.get();
-    
-    m_subsystem.arcadeDrive(speed, angle);
+    double speed = pidController.calculate(m_subsystem.getPosition() * Constants.OperatorConstants.ticksToFeet, setPoint);
 
-    SmartDashboard.putNumber("speeed", speed);
-    SmartDashboard.putNumber("angle", angle);
+    m_subsystem.arcadeDrive(speed, 0);
+
+    SmartDashboard.putNumber("pid speed/error", speed);
+    SmartDashboard.putNumber("Position", m_subsystem.getPosition() * Constants.OperatorConstants.ticksToFeet);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

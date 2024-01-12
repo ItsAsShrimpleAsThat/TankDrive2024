@@ -8,9 +8,12 @@ package frc.robot.subsystems;
 
 
 
+import java.security.spec.EncodedKeySpec;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,13 +27,22 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   private final CANSparkMax RIGHT1 = new CANSparkMax(9, MotorType.kBrushed); 
   private final CANSparkMax RIGHT2 = new CANSparkMax(14, MotorType.kBrushed); 
 
+  private final Encoder encoder1 = new Encoder(0, 1);
+
   public void arcadeDrive (double speed, double rotation){
    LEFT1.set(speed - rotation);    LEFT2.set(speed - rotation);
    RIGHT1.set(speed + rotation);    RIGHT2.set(speed + rotation);
   }
   
+  public double getPosition()
+  {
+    return -encoder1.getDistance();
+  }
 
-
+  public void resetEncoders()
+  {
+    encoder1.reset();
+  }
   
   /**
    * Example command factory method.

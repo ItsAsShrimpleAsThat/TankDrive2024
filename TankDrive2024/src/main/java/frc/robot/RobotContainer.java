@@ -5,9 +5,11 @@
 package frc.robot;
 
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.AutonDriveCommand;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -45,7 +47,8 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-    //new JoystickButton(joyStick, 1).whileTrue(new ArcadeDriveCommand(m_arcadeDriveSubsystem, joyStick.getRawAxis(1), joyStick.getRawAxis()));
+    new JoystickButton(joyStick, 1).onTrue(new AutonDriveCommand(m_arcadeDriveSubsystem, 4.20));
+    new JoystickButton(joyStick, 2).onTrue(new AutonDriveCommand(m_arcadeDriveSubsystem, 0));
   }
 
   /**
