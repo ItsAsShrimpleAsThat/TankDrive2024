@@ -19,18 +19,14 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   
   public ArcadeDriveSubsystem() {}
 
-  private final CANSparkMax LEFT1 = new CANSparkMax(13, MotorType.kBrushless);
-  private final CANSparkMax LEFT2 = new CANSparkMax(11, MotorType.kBrushless); 
-  private final CANSparkMax RIGHT1 = new CANSparkMax(9, MotorType.kBrushless); 
-  private final CANSparkMax RIGHT2 = new CANSparkMax(14, MotorType.kBrushless); 
-  
-  private final DifferentialDrive m_Drive1 = new DifferentialDrive(LEFT1, RIGHT1);
-  private final DifferentialDrive m_Drive2 = new DifferentialDrive(LEFT2, RIGHT2);
+  private final CANSparkMax LEFT1 = new CANSparkMax(13, MotorType.kBrushed);
+  private final CANSparkMax LEFT2 = new CANSparkMax(11, MotorType.kBrushed); 
+  private final CANSparkMax RIGHT1 = new CANSparkMax(9, MotorType.kBrushed); 
+  private final CANSparkMax RIGHT2 = new CANSparkMax(14, MotorType.kBrushed); 
 
-  public void ArcadeDrive (double speed, double rotation){
-    
-   m_Drive1.arcadeDrive(speed, rotation);
-   m_Drive2.arcadeDrive(speed, rotation);
+  public void arcadeDrive (double speed, double rotation){
+   LEFT1.set(speed - rotation);    LEFT2.set(speed - rotation);
+   RIGHT1.set(speed + rotation);    RIGHT2.set(speed + rotation);
   }
   
 
